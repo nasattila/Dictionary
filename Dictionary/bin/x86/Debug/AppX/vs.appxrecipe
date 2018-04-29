@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-04-29T18:10:43.753</Modified>
+      <Modified>2018-04-29T22:28:19.803</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\bin\x86\Debug\Dictionary.exe">
       <PackagePath>entrypoint\Dictionary.exe</PackagePath>
-      <Modified>2018-04-29T18:10:42.924</Modified>
+      <Modified>2018-04-29T22:28:16.257</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\root\.nuget\packages\microsoft.csharp\4.3.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -568,11 +568,11 @@
     <AppxPackagedFile Include="C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-04-29T18:10:43.504</Modified>
+      <Modified>2018-04-29T22:28:18.331</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\bin\x86\Debug\Core\Dictionary.exe">
       <PackagePath>Dictionary.exe</PackagePath>
-      <Modified>2018-04-29T18:10:43.748</Modified>
+      <Modified>2018-04-29T22:28:19.785</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

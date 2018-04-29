@@ -436,3 +436,4 @@ C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\D
 C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\obj\x86\Debug\qualifiers.txt.intermediate
 C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\obj\x86\Debug\ProjectArchitectures.txt
+C:\attila_home\bme\sixth_semester\client_side_technologies\homework\Dictionary\Dictionary\obj\x86\Debug\Dictionary.csprojResolveAssemblyReference.cache
