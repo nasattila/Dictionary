@@ -1,8 +1,7 @@
 ﻿using Dictionary.Client;
-using Dictionary.Model;
 using Dictionary.Service;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 
 namespace Dictionary.ViewModel
 {
@@ -13,7 +12,7 @@ namespace Dictionary.ViewModel
 
         private string word = "";  // stores the entered word
         private string language = "en";
-        private IList<string> meanings = new List<string>();  // stores the meanings of the word
+        private IList<string> meanings = new ObservableCollection<string>();  // stores the meanings of the word
         private string status = "";  // stores the current status of searching for the word
 
         public string Word
@@ -32,10 +31,8 @@ namespace Dictionary.ViewModel
                     {
                         FindResult();  // search for word upon entering text
                     }
-                    else if(Meanings != null)
-                    {
-                        Meanings = new List<string>();
-                    }
+
+                    ClearMeanings();  // clear any previously stored meanings
 
                     OnPropertyChanged("Word");  // notify about change
                 }
@@ -94,10 +91,7 @@ namespace Dictionary.ViewModel
         {
             Status = "";
 
-            if (Meanings != null && Meanings.Count > 0)
-            {
-                Meanings = new List<string>();  // clear any previously stored meanings
-            }
+            ClearMeanings();  // clear any previously stored meanings
 
             if (Word != "")
             {
@@ -109,7 +103,7 @@ namespace Dictionary.ViewModel
 
                 if (getDefinitionTask != null)
                 {
-                    Meanings = getDefinitionTask.Meanings;  // update found meanings
+                    Meanings = new ObservableCollection<string>(getDefinitionTask.Meanings);  // update found meanings
 
                     if (Meanings != null && Meanings.Count > 0)
                     {
@@ -124,6 +118,14 @@ namespace Dictionary.ViewModel
                 {
                     Status = NOT_FOUND;
                 }
+            }
+        }
+
+        private void ClearMeanings()
+        {
+            if(Meanings != null && Meanings.Count > 0)
+            {
+                Meanings.Clear();
             }
         }
     }

@@ -5,9 +5,6 @@ namespace Dictionary.Model
 {
     public class MyDefinition
     {
-        private string word = "";
-        private IList<string> meanings = new List<string>();
-
         public string Word
         {
             get;

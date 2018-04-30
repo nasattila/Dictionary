@@ -132,25 +132,15 @@ namespace Dictionary.Dictionary_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[8];
-            _typeNameTable[0] = "Dictionary.ViewModel.MainViewModel";
-            _typeNameTable[1] = "Dictionary.ViewModel.MainViewModelBase";
-            _typeNameTable[2] = "Object";
-            _typeNameTable[3] = "String";
-            _typeNameTable[4] = "System.Collections.Generic.IList`1<String>";
-            _typeNameTable[5] = "Dictionary.MainPage";
-            _typeNameTable[6] = "Windows.UI.Xaml.Controls.Page";
-            _typeNameTable[7] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable = new string[3];
+            _typeNameTable[0] = "Dictionary.MainPage";
+            _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
+            _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
 
-            _typeTable = new global::System.Type[8];
-            _typeTable[0] = typeof(global::Dictionary.ViewModel.MainViewModel);
-            _typeTable[1] = typeof(global::Dictionary.ViewModel.MainViewModelBase);
-            _typeTable[2] = typeof(global::System.Object);
-            _typeTable[3] = typeof(global::System.String);
-            _typeTable[4] = typeof(global::System.Collections.Generic.IList<global::System.String>);
-            _typeTable[5] = typeof(global::Dictionary.MainPage);
-            _typeTable[6] = typeof(global::Windows.UI.Xaml.Controls.Page);
-            _typeTable[7] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable = new global::System.Type[3];
+            _typeTable[0] = typeof(global::Dictionary.MainPage);
+            _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
+            _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -185,14 +175,7 @@ namespace Dictionary.Dictionary_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_MainViewModel() { return new global::Dictionary.ViewModel.MainViewModel(); }
-        private object Activate_5_MainPage() { return new global::Dictionary.MainPage(); }
-        private void VectorAdd_4_IList(object instance, object item)
-        {
-            var collection = (global::System.Collections.Generic.ICollection<global::System.String>)instance;
-            var newItem = (global::System.String)item;
-            collection.Add(newItem);
-        }
+        private object Activate_0_MainPage() { return new global::Dictionary.MainPage(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -204,50 +187,18 @@ namespace Dictionary.Dictionary_XamlTypeInfo
             switch (typeIndex)
             {
 
-            case 0:   //  Dictionary.ViewModel.MainViewModel
-                userType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Dictionary.ViewModel.MainViewModelBase"));
-                userType.Activator = Activate_0_MainViewModel;
-                userType.AddMemberName("Word");
-                userType.AddMemberName("Language");
-                userType.AddMemberName("Meanings");
-                userType.AddMemberName("Status");
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 1:   //  Dictionary.ViewModel.MainViewModelBase
-                userType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 2:   //  Object
-                xamlType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 3:   //  String
-                xamlType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 4:   //  System.Collections.Generic.IList`1<String>
-                userType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType(this, typeName, type, null);
-                userType.CollectionAdd = VectorAdd_4_IList;
-                userType.SetIsReturnTypeStub();
-                xamlType = userType;
-                break;
-
-            case 5:   //  Dictionary.MainPage
+            case 0:   //  Dictionary.MainPage
                 userType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_5_MainPage;
+                userType.Activator = Activate_0_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 6:   //  Windows.UI.Xaml.Controls.Page
+            case 1:   //  Windows.UI.Xaml.Controls.Page
                 xamlType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 7:   //  Windows.UI.Xaml.Controls.UserControl
+            case 2:   //  Windows.UI.Xaml.Controls.UserControl
                 xamlType = new global::Dictionary.Dictionary_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
             }
@@ -255,79 +206,11 @@ namespace Dictionary.Dictionary_XamlTypeInfo
         }
 
 
-        private object get_0_MainViewModel_Word(object instance)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            return that.Word;
-        }
-        private void set_0_MainViewModel_Word(object instance, object Value)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            that.Word = (global::System.String)Value;
-        }
-        private object get_1_MainViewModel_Language(object instance)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            return that.Language;
-        }
-        private void set_1_MainViewModel_Language(object instance, object Value)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            that.Language = (global::System.String)Value;
-        }
-        private object get_2_MainViewModel_Meanings(object instance)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            return that.Meanings;
-        }
-        private void set_2_MainViewModel_Meanings(object instance, object Value)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            that.Meanings = (global::System.Collections.Generic.IList<global::System.String>)Value;
-        }
-        private object get_3_MainViewModel_Status(object instance)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            return that.Status;
-        }
-        private void set_3_MainViewModel_Status(object instance, object Value)
-        {
-            var that = (global::Dictionary.ViewModel.MainViewModel)instance;
-            that.Status = (global::System.String)Value;
-        }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
             global::Dictionary.Dictionary_XamlTypeInfo.XamlMember xamlMember = null;
-            global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType userType;
-
-            switch (longMemberName)
-            {
-            case "Dictionary.ViewModel.MainViewModel.Word":
-                userType = (global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Dictionary.ViewModel.MainViewModel");
-                xamlMember = new global::Dictionary.Dictionary_XamlTypeInfo.XamlMember(this, "Word", "String");
-                xamlMember.Getter = get_0_MainViewModel_Word;
-                xamlMember.Setter = set_0_MainViewModel_Word;
-                break;
-            case "Dictionary.ViewModel.MainViewModel.Language":
-                userType = (global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Dictionary.ViewModel.MainViewModel");
-                xamlMember = new global::Dictionary.Dictionary_XamlTypeInfo.XamlMember(this, "Language", "String");
-                xamlMember.Getter = get_1_MainViewModel_Language;
-                xamlMember.Setter = set_1_MainViewModel_Language;
-                break;
-            case "Dictionary.ViewModel.MainViewModel.Meanings":
-                userType = (global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Dictionary.ViewModel.MainViewModel");
-                xamlMember = new global::Dictionary.Dictionary_XamlTypeInfo.XamlMember(this, "Meanings", "System.Collections.Generic.IList`1<String>");
-                xamlMember.Getter = get_2_MainViewModel_Meanings;
-                xamlMember.Setter = set_2_MainViewModel_Meanings;
-                break;
-            case "Dictionary.ViewModel.MainViewModel.Status":
-                userType = (global::Dictionary.Dictionary_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Dictionary.ViewModel.MainViewModel");
-                xamlMember = new global::Dictionary.Dictionary_XamlTypeInfo.XamlMember(this, "Status", "String");
-                xamlMember.Getter = get_3_MainViewModel_Status;
-                xamlMember.Setter = set_3_MainViewModel_Status;
-                break;
-            }
+            // No Local Properties
             return xamlMember;
         }
     }

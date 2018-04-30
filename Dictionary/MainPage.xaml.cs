@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Dictionary.ViewModel;
 using Windows.UI.Xaml.Controls;
 
 
@@ -14,6 +14,8 @@ namespace Dictionary
         public MainPage()
         {
             this.InitializeComponent();
+
+            DataContext = new MainViewModel();
         }
     }
 }
