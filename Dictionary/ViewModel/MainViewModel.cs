@@ -7,13 +7,14 @@ namespace Dictionary.ViewModel
 {
     class MainViewModel : MainViewModelBase
     {
+        private static readonly string ENTER = "Enter a word to see its definition(s).";
         private static readonly string SEARCHING = "SEARCHING...";
         private static readonly string NOT_FOUND = "No results were found for this word...";
 
         private string word = "";  // stores the entered word
         private string language = "en";
         private IList<string> meanings = new ObservableCollection<string>();  // stores the meanings of the word
-        private string status = "";  // stores the current status of searching for the word
+        private string status = ENTER;  // stores the current status of searching for the word
 
         public string Word
         {
@@ -30,6 +31,12 @@ namespace Dictionary.ViewModel
                     if (word != null && word != "")
                     {
                         FindResult();  // search for word upon entering text
+                    }
+                    else
+                    {
+                        Status = ENTER;
+
+                        ClearMeanings();
                     }
 
                     ClearMeanings();  // clear any previously stored meanings
@@ -101,7 +108,7 @@ namespace Dictionary.ViewModel
                 var dictionaryService = new DictionaryService(dictionaryClient);
                 var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, Language);
 
-                if (getDefinitionTask != null)
+                if (getDefinitionTask != null && getDefinitionTask.Meanings != null)
                 {
                     Meanings = new ObservableCollection<string>(getDefinitionTask.Meanings);  // update found meanings
 
@@ -118,6 +125,17 @@ namespace Dictionary.ViewModel
                 {
                     Status = NOT_FOUND;
                 }
+
+                if (Word == "")
+                {
+                    Status = ENTER;
+
+                    ClearMeanings();
+                }
+            }
+            else
+            {
+                Status = ENTER;
             }
         }
 

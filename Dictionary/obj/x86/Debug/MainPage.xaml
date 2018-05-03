@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <!-- <ComboBox ItemsSource="{x:Bind sourceLanguages}"/> -->
-            <TextBox Text="{Binding Word, Mode=TwoWay}"
+            <TextBox Text="{Binding Word, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="25"
                  VerticalAlignment="Top"
                  BorderBrush="AliceBlue"
