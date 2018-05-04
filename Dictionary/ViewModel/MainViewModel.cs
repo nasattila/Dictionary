@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
 
 namespace Dictionary.ViewModel
 {
@@ -14,7 +16,9 @@ namespace Dictionary.ViewModel
         private static readonly string NOT_FOUND = "No results were found for this word...";
 
         private string word = "";  // stores the entered word
+        private IList<string> sourceLanguages = new ObservableCollection<string>();
         private string sourceLanguage = "en";
+        private IList<string> targetLanguages = new ObservableCollection<string>();
         private string targetLanguage = "en";
         private IList<string> meanings = new ObservableCollection<string>();  // stores the meanings of the word
         private string status = ENTER;  // stores the current status of searching for the word
@@ -27,27 +31,9 @@ namespace Dictionary.ViewModel
             }
             set
             {
-                /* if (value != word)
-                {
-                    word = value;
-
-                    if (word != null && word != "")
-                    {
-                        FindResult();  // search for word upon entering text
-                    }
-                    else
-                    {
-                        Status = ENTER;
-
-                        ClearMeanings();
-                    }
-
-                    OnPropertyChanged("Word");  // notify about change
-                } */
-
                 if (value != null)
                 {
-                    var lowerCase = value.ToLower();
+                    var lowerCase = value.ToLower();  // convert text to lower case
 
                     if (lowerCase != word)
                     {
@@ -61,7 +47,7 @@ namespace Dictionary.ViewModel
 
                             // FindResult();  // search for word upon entering text
 
-                            DelayAction(1000, new Action(() => { this.FindResult(); }));
+                            DelayAction(1000, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
                         }
                         else
                         {
@@ -80,6 +66,20 @@ namespace Dictionary.ViewModel
             }
         }
 
+        public IList<string> SourceLanguages
+        {
+            get
+            {
+                return sourceLanguages;
+            }
+            set
+            {
+                sourceLanguages = value;
+
+                OnPropertyChanged("SourceLanguages");  // notify about change
+            }
+        }
+
         public string SourceLanguage
         {
             get
@@ -92,8 +92,33 @@ namespace Dictionary.ViewModel
                 {
                     sourceLanguage = value;
 
+                    ClearMeanings();
+
+                    if (Word != null && Word != "")
+                    {
+                        ClearMeanings();
+
+                        Status = SEARCHING;
+
+                        DelayAction(1000, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
+                    }
+
                     OnPropertyChanged("SourceLanguage");  // notify about change
                 }
+            }
+        }
+
+        public IList<string> TargetLanguages
+        {
+            get
+            {
+                return targetLanguages;
+            }
+            set
+            {
+                targetLanguages = value;
+
+                OnPropertyChanged("TargetLanguages");  // notify about change
             }
         }
 
@@ -183,6 +208,31 @@ namespace Dictionary.ViewModel
             else
             {
                 Status = ENTER;
+            }
+        }
+
+        public async void GetSourceLanguages(ComboBox comboBox)
+        {
+            var dictionaryClient = new DictionaryClient();
+            var languageService = new LanguageService(dictionaryClient);
+            var getLanguagesTask = await languageService.GetSourceLanguagesAsnyc();
+
+            if (getLanguagesTask != null && getLanguagesTask.Languages != null)
+            {
+                var languages = new ObservableCollection<string>();
+
+                foreach (string language in getLanguagesTask.Languages)
+                {
+                    languages.Add(language);
+                }
+
+                SourceLanguages = languages;
+
+                comboBox.SelectedIndex = SourceLanguages.IndexOf("en");
+            }
+            else
+            {
+                SourceLanguages = new ObservableCollection<string>();
             }
         }
 

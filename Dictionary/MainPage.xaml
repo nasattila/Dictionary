@@ -15,14 +15,21 @@
                    VerticalAlignment="Top"
                    Margin="0,30,0,0"/>
         <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <!-- <ComboBox ItemsSource="{x:Bind sourceLanguages}"/> -->
+                    HorizontalAlignment="Center"
+                    Margin="0,170,0,0">
+            <ComboBox x:Name="language_selector"
+                      ItemsSource="{Binding SourceLanguages, Mode=TwoWay}"
+                      SelectedValue="{Binding SourceLanguage, Mode=TwoWay}"
+                      VerticalAlignment="Top"
+                      Width="Auto"
+                      Height="50"
+                      Margin="0,0,10,0"/>
             <TextBox Text="{Binding Word, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="25"
                  VerticalAlignment="Top"
-                 BorderBrush="AliceBlue"
+                 Height="50"
                  Width="600"
-                 Margin="0,170,0,0"
+                 BorderBrush="AliceBlue"
                  PlaceholderText="search for a word..."/>
         </StackPanel>
         <TextBlock Text="{Binding Status, Mode=OneWay}"

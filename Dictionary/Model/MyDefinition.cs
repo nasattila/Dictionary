@@ -11,7 +11,7 @@ namespace Dictionary.Model
             set;
         }
 
-        public List<string> Meanings
+        public IList<string> Meanings
         {
             get;
             set;

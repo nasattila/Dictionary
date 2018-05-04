@@ -103,7 +103,6 @@
     <Compile Include="Model\Definition.cs" />
     <Compile Include="Model\Languages.cs" />
     <Compile Include="Model\MyDefinition.cs" />
-    <Compile Include="Model\MyLanguage.cs" />
     <Compile Include="Model\MyLanguages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DictionaryService.cs" />

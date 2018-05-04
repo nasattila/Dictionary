@@ -6,6 +6,6 @@ namespace Dictionary.Service
 {
     public interface ILanguageService
     {
-        Task<MyLanguages> GetSupportedLanguagesAsync();
+        Task<MyLanguages> GetSourceLanguagesAsnyc();
     }
 }

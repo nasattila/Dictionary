@@ -8,7 +8,7 @@ namespace Dictionary.Service
 {
     public class DictionaryService : IDictionaryService
     {
-        private static readonly string PREFIX_ARGS = "entries/";
+        private static readonly string PREFIX_ARGS = "entries";
 
         private readonly IDictionaryClient dictionaryClient;
 
@@ -19,7 +19,7 @@ namespace Dictionary.Service
 
         public async Task<MyDefinition> GetDefinitionAsync(string word, string language)
         {
-            var args = PREFIX_ARGS + language + "/" + word;
+            var args = PREFIX_ARGS + "/" + language + "/" + word;
             var result = await dictionaryClient.GetAsync<dynamic>(args);
 
             if (result == null)

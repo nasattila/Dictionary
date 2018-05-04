@@ -8,6 +8,8 @@ namespace Dictionary.Service
 {
     public class LanguageService : ILanguageService
     {
+        private static readonly string PREFIX_ARGS = "languages";
+
         private readonly IDictionaryClient dictionaryClient;
 
         public LanguageService(IDictionaryClient dictionaryClient)
@@ -15,9 +17,9 @@ namespace Dictionary.Service
             this.dictionaryClient = dictionaryClient;
         }
 
-        public async Task<MyLanguages> GetSupportedLanguagesAsync()
+        public async Task<MyLanguages> GetSourceLanguagesAsnyc()
         {
-            var args = "languages";
+            var args = PREFIX_ARGS;
             var result = await dictionaryClient.GetAsync<dynamic>(args);
 
             if (result == null)
@@ -25,16 +27,20 @@ namespace Dictionary.Service
                 return new MyLanguages();
             }
 
-            var languages = new SortedSet<MyLanguage>();
-
-            // TODO
+            var languages = new MyLanguages
+            {
+                Languages = new SortedSet<string>()
+            };
 
             for (int i = 0; result.results != null && i < result.results.Count; i = i + 1)
             {
-
+                if (result.results[i].type.ToString() == "monolingual")
+                {
+                    languages.Languages.Add(result.results[i].sourceLanguage.id.ToString());
+                }
             }
 
-            return result;
+            return languages;
         }
     }
 }

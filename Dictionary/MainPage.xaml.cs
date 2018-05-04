@@ -15,7 +15,11 @@ namespace Dictionary
         {
             this.InitializeComponent();
 
-            DataContext = new MainViewModel();
+            MainViewModel mainViewModel = new MainViewModel();
+
+            DataContext = mainViewModel;
+
+            mainViewModel.GetSourceLanguages(language_selector);
         }
     }
 }
