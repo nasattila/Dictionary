@@ -2,8 +2,8 @@
 <Roots >
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="Meanings" />
-    <RootPropertyPathName Name="Status" />
     <RootPropertyPathName Name="Word" />
+    <RootPropertyPathName Name="Status" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application">
@@ -24,6 +24,7 @@
       <RootProperty Name="TextAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="Padding" />
       <RootProperty Name="TextWrapping" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">

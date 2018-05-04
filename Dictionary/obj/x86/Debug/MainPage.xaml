@@ -29,9 +29,16 @@
                    TextAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,250,0,0"/>
+        <TextBlock Text="{Binding Word, Mode=OneWay}"
+                   TextAlignment="Left"
+                   FontSize="50"
+                   FontFamily="Century Gothic"
+                   VerticalAlignment="Top"
+                   Padding="60,10"
+                   Margin="0,270,0,0"/>
         <ListView ItemsSource="{Binding Meanings, Mode=OneWay}"
-                  Padding="40,10"
-                  Margin="0,260,0,0">
+                  Padding="120,10"
+                  Margin="0,360,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"

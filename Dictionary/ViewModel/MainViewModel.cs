@@ -1,18 +1,21 @@
 ﻿using Dictionary.Client;
 using Dictionary.Service;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml;
 
 namespace Dictionary.ViewModel
 {
     class MainViewModel : MainViewModelBase
     {
-        private static readonly string ENTER = "Enter a word to see its definition(s).";
+        private static readonly string ENTER = "Enter a word to see its definition(s) (if any).";
         private static readonly string SEARCHING = "SEARCHING...";
         private static readonly string NOT_FOUND = "No results were found for this word...";
 
         private string word = "";  // stores the entered word
-        private string language = "en";
+        private string sourceLanguage = "en";
+        private string targetLanguage = "en";
         private IList<string> meanings = new ObservableCollection<string>();  // stores the meanings of the word
         private string status = ENTER;  // stores the current status of searching for the word
 
@@ -24,7 +27,7 @@ namespace Dictionary.ViewModel
             }
             set
             {
-                if (value != word)
+                /* if (value != word)
                 {
                     word = value;
 
@@ -39,26 +42,74 @@ namespace Dictionary.ViewModel
                         ClearMeanings();
                     }
 
-                    ClearMeanings();  // clear any previously stored meanings
-
                     OnPropertyChanged("Word");  // notify about change
+                } */
+
+                if (value != null)
+                {
+                    var lowerCase = value.ToLower();
+
+                    if (lowerCase != word)
+                    {
+                        word = lowerCase;
+
+                        ClearMeanings();  // clear any previously stored meanings
+
+                        if (word != "")
+                        {
+                            Status = SEARCHING;
+
+                            // FindResult();  // search for word upon entering text
+
+                            DelayAction(1000, new Action(() => { this.FindResult(); }));
+                        }
+                        else
+                        {
+                            Status = ENTER;
+                        }
+
+                        OnPropertyChanged("Word");  // notify about change
+                    }
+                }
+                else
+                {
+                    Status = ENTER;
+
+                    ClearMeanings();
                 }
             }
         }
 
-        public string Language
+        public string SourceLanguage
         {
             get
             {
-                return language;
+                return sourceLanguage;
             }
             set
             {
-                if (value != language)
+                if (value != sourceLanguage)
                 {
-                    language = value;
+                    sourceLanguage = value;
 
-                    OnPropertyChanged("Language");  // notify about change
+                    OnPropertyChanged("SourceLanguage");  // notify about change
+                }
+            }
+        }
+
+        public string TargetLanguage
+        {
+            get
+            {
+                return targetLanguage;
+            }
+            set
+            {
+                if (value != targetLanguage)
+                {
+                    targetLanguage = value;
+
+                    OnPropertyChanged("TargetLanguage");  // notify about change
                 }
             }
         }
@@ -96,17 +147,13 @@ namespace Dictionary.ViewModel
 
         public async void FindResult()
         {
-            Status = "";
-
-            ClearMeanings();  // clear any previously stored meanings
-
             if (Word != "")
             {
                 Status = SEARCHING;
 
                 var dictionaryClient = new DictionaryClient();
                 var dictionaryService = new DictionaryService(dictionaryClient);
-                var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, Language);
+                var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, SourceLanguage);
 
                 if (getDefinitionTask != null && getDefinitionTask.Meanings != null)
                 {
@@ -130,7 +177,7 @@ namespace Dictionary.ViewModel
                 {
                     Status = ENTER;
 
-                    ClearMeanings();
+                    ClearMeanings();  // clear any previously stored meanings
                 }
             }
             else
@@ -145,6 +192,22 @@ namespace Dictionary.ViewModel
             {
                 Meanings.Clear();
             }
+        }
+
+        public static void DelayAction(int milliseconds, Action action)
+        {
+            var timer = new DispatcherTimer();
+
+            timer.Tick += delegate
+            {
+                action.Invoke();
+
+                timer.Stop();
+            };
+
+            timer.Interval = TimeSpan.FromMilliseconds(milliseconds);
+
+            timer.Start();
         }
     }
 }
