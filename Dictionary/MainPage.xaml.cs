@@ -17,9 +17,9 @@ namespace Dictionary
 
             MainViewModel mainViewModel = new MainViewModel();
 
-            DataContext = mainViewModel;
+            DataContext = mainViewModel;  // set data context
 
-            mainViewModel.GetSourceLanguages(language_selector);
+            mainViewModel.GetSourceLanguages(language_selector);  // populate combo box with source languages
         }
     }
 }

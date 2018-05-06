@@ -18,6 +18,7 @@
                     HorizontalAlignment="Center"
                     Margin="0,170,0,0">
             <ComboBox x:Name="language_selector"
+                      Background="#FFDEDEDE"
                       ItemsSource="{Binding SourceLanguages, Mode=TwoWay}"
                       SelectedValue="{Binding SourceLanguage, Mode=TwoWay}"
                       VerticalAlignment="Top"
@@ -25,33 +26,37 @@
                       Height="50"
                       Margin="0,0,10,0"/>
             <TextBox Text="{Binding Word, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="25"
-                 VerticalAlignment="Top"
-                 Height="50"
-                 Width="600"
-                 BorderBrush="AliceBlue"
-                 PlaceholderText="search for a word..."/>
+                     BorderBrush="LightSteelBlue"
+                     FontSize="25"
+                     VerticalAlignment="Top"
+                     Height="50"
+                     Width="600"
+                     PlaceholderText="search for a word..."/>
         </StackPanel>
         <TextBlock Text="{Binding Status, Mode=OneWay}"
+                   Foreground="Gray"
+                   FontSize="20"
                    TextAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="0,250,0,0"/>
         <TextBlock Text="{Binding Word, Mode=OneWay}"
                    TextAlignment="Left"
-                   FontSize="50"
+                   FontSize="70"
                    FontFamily="Century Gothic"
                    VerticalAlignment="Top"
-                   Padding="60,10"
-                   Margin="0,270,0,0"/>
+                   Padding="120,10"
+                   Margin="0,280,0,0"/>
         <ListView ItemsSource="{Binding Meanings, Mode=OneWay}"
-                  Padding="120,10"
-                  Margin="0,360,0,0">
+                  Background="White"
+                  Padding="120,20"
+                  Margin="0,390,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"
-                               FontSize="15"
+                               FontSize="20"
                                FontFamily="Century Gothic"
-                               TextWrapping="WrapWholeWords"/>
+                               TextWrapping="WrapWholeWords"
+                               Padding="0,25"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

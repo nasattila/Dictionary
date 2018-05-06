@@ -13,7 +13,7 @@ namespace Dictionary.ViewModel
     {
         private static readonly string ENTER = "Enter a word to see its definition(s) (if any).";
         private static readonly string SEARCHING = "SEARCHING...";
-        private static readonly string NOT_FOUND = "No results were found for this word...";
+        private static readonly string NOT_FOUND = "No results were found for this word... " + ENTER;
 
         private string word = "";  // stores the entered word
         private IList<string> sourceLanguages = new ObservableCollection<string>();
@@ -170,23 +170,23 @@ namespace Dictionary.ViewModel
             }
         }
 
-        public async void FindResult()
+        public async void FindResult()  // find definition(s) and put them in the Meanings list
         {
             if (Word != "")
             {
                 Status = SEARCHING;
 
-                var dictionaryClient = new DictionaryClient();
-                var dictionaryService = new DictionaryService(dictionaryClient);
-                var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, SourceLanguage);
+                var dictionaryClient = new DictionaryClient();  // create client
+                var dictionaryService = new DictionaryService(dictionaryClient);  // create service
+                var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, SourceLanguage);  // get definitions asynchronously
 
-                if (getDefinitionTask != null && getDefinitionTask.Meanings != null)
+                if (getDefinitionTask != null && getDefinitionTask.Meanings != null)  // if definitions were found
                 {
                     Meanings = new ObservableCollection<string>(getDefinitionTask.Meanings);  // update found meanings
 
                     if (Meanings != null && Meanings.Count > 0)
                     {
-                        Status = "";
+                        Status = ENTER;
                     }
                     else
                     {
@@ -236,7 +236,7 @@ namespace Dictionary.ViewModel
             }
         }
 
-        private void ClearMeanings()
+        private void ClearMeanings()  // clear Meanings list
         {
             if(Meanings != null && Meanings.Count > 0)
             {
@@ -244,7 +244,7 @@ namespace Dictionary.ViewModel
             }
         }
 
-        public static void DelayAction(int milliseconds, Action action)
+        public static void DelayAction(int milliseconds, Action action)  // timer
         {
             var timer = new DispatcherTimer();
 

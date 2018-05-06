@@ -6,7 +6,7 @@ using Dictionary.Model;
 
 namespace Dictionary.Service
 {
-    public class DictionaryService : IDictionaryService
+    public class DictionaryService : IDictionaryService  // service having to do with definitions
     {
         private static readonly string PREFIX_ARGS = "entries";
 
@@ -19,16 +19,17 @@ namespace Dictionary.Service
 
         public async Task<MyDefinition> GetDefinitionAsync(string word, string language)
         {
-            var args = PREFIX_ARGS + "/" + language + "/" + word;
-            var result = await dictionaryClient.GetAsync<dynamic>(args);
+            var args = PREFIX_ARGS + "/" + language + "/" + word;  // add path to base address
+            var result = await dictionaryClient.GetAsync<dynamic>(args);  // get results (deserialized JSON objects)
 
-            if (result == null)
+            if (result == null)  // if result is empty
             {
                 return new MyDefinition();
             }
 
-            var meanings = new List<string>();
+            var meanings = new List<string>();  // store definition strings to return here
 
+            // get definitions from deserialized JSON:
             for(int i = 0; result.results != null && i < result.results.Count; i = i + 1)
             {
                 for(int j = 0; result.results[i].lexicalEntries != null && j < result.results[i].lexicalEntries.Count; j = j + 1)
@@ -41,14 +42,15 @@ namespace Dictionary.Service
                             {
                                 var meaning = result.results[i].lexicalEntries[j].entries[k].senses[m].definitions[n].ToString();
 
-                                meanings.Add(meaning);
+                                meanings.Add(meaning);  // add meaning to the list
                             }
                         }
                     }
                 }
             }
+            //
 
-            var definition = new MyDefinition
+            var definition = new MyDefinition  // create object to store definitions of word
             {
                 Word = word,
                 Meanings = meanings
