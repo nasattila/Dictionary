@@ -8,55 +8,55 @@
 
     <Grid Background="#FFDEDEDE">
         <TextBlock Text="DICTIONARY"
-                   FontSize="90"
+                   FontSize="52"
                    FontFamily="Century Gothic"
                    FontWeight="ExtraLight"
                    TextAlignment="Center"
                    VerticalAlignment="Top"
-                   Margin="0,30,0,0"/>
+                   Margin="0,20,0,0"/>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
-                    Margin="0,170,0,0">
+                    Margin="0,100,0,0">
             <ComboBox x:Name="language_selector"
                       Background="#FFDEDEDE"
                       ItemsSource="{Binding SourceLanguages, Mode=TwoWay}"
                       SelectedValue="{Binding SourceLanguage, Mode=TwoWay}"
                       VerticalAlignment="Top"
                       Width="Auto"
-                      Height="50"
-                      Margin="0,0,10,0"/>
+                      Height="52"
+                      Margin="0,0,12,0"/>
             <TextBox Text="{Binding Word, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      BorderBrush="LightSteelBlue"
-                     FontSize="25"
+                     FontSize="28"
                      VerticalAlignment="Top"
-                     Height="50"
+                     Height="52"
                      Width="600"
                      PlaceholderText="search for a word..."/>
         </StackPanel>
         <TextBlock Text="{Binding Status, Mode=OneWay}"
                    Foreground="Gray"
-                   FontSize="20"
+                   FontSize="16"
                    TextAlignment="Center"
                    VerticalAlignment="Top"
-                   Margin="0,250,0,0"/>
+                   Margin="0,160,0,0"/>
         <TextBlock Text="{Binding Word, Mode=OneWay}"
                    TextAlignment="Left"
-                   FontSize="70"
+                   FontSize="48"
                    FontFamily="Century Gothic"
                    VerticalAlignment="Top"
-                   Padding="120,10"
-                   Margin="0,280,0,0"/>
+                   Padding="180,12"
+                   Margin="0,180,0,0"/>
         <ListView ItemsSource="{Binding Meanings, Mode=OneWay}"
                   Background="White"
-                  Padding="120,20"
-                  Margin="0,390,0,0">
+                  Padding="180,12"
+                  Margin="0,270,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"
-                               FontSize="20"
+                               FontSize="16"
                                FontFamily="Century Gothic"
                                TextWrapping="WrapWholeWords"
-                               Padding="0,25"/>
+                               Padding="0,24"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -213,22 +213,22 @@ namespace Dictionary.ViewModel
 
         public async void GetSourceLanguages(ComboBox comboBox)
         {
-            var dictionaryClient = new DictionaryClient();
-            var languageService = new LanguageService(dictionaryClient);
-            var getLanguagesTask = await languageService.GetSourceLanguagesAsnyc();
+            var dictionaryClient = new DictionaryClient();  // create client
+            var languageService = new LanguageService(dictionaryClient);  // create service
+            var getLanguagesTask = await languageService.GetSourceLanguagesAsnyc();  // get source languages asyunchronously
 
-            if (getLanguagesTask != null && getLanguagesTask.Languages != null)
+            if (getLanguagesTask != null && getLanguagesTask.Languages != null)  // if source languages were found
             {
-                var languages = new ObservableCollection<string>();
+                var languages = new ObservableCollection<string>();  // transfer supported language strings here
 
                 foreach (string language in getLanguagesTask.Languages)
                 {
                     languages.Add(language);
                 }
 
-                SourceLanguages = languages;
+                SourceLanguages = languages;  // set SourceLanguages to those found
 
-                comboBox.SelectedIndex = SourceLanguages.IndexOf("en");
+                comboBox.SelectedIndex = SourceLanguages.IndexOf("en");  // set initial value of combo box to English
             }
             else
             {
