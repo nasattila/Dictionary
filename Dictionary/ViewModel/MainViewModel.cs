@@ -14,6 +14,7 @@ namespace Dictionary.ViewModel
         private static readonly string ENTER = "Enter a word to see its definition(s) (if any).";
         private static readonly string SEARCHING = "SEARCHING...";
         private static readonly string NOT_FOUND = "No results were found for this word... " + ENTER;
+        private static readonly string NO_CONNECTION = "Please check your connection...";
 
         private string word = "";  // stores the entered word
         private IList<string> sourceLanguages = new ObservableCollection<string>();
@@ -45,9 +46,15 @@ namespace Dictionary.ViewModel
                         {
                             Status = SEARCHING;
 
-                            // FindResult();  // search for word upon entering text
+                            // DelayAction(1000, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
 
-                            DelayAction(1000, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
+                            DelayAction(1000);
+
+                            if(word == lowerCase)  // check if word has changed
+                            {
+                                FindResult();  // search for word upon entering text
+                            }
+    
                         }
                         else
                         {
@@ -100,7 +107,7 @@ namespace Dictionary.ViewModel
 
                         Status = SEARCHING;
 
-                        DelayAction(1000, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
+                        DelayAction(500, new Action(() => { this.FindResult(); }));  // delay search for more correct thread return order
                     }
 
                     OnPropertyChanged("SourceLanguage");  // notify about change
@@ -178,31 +185,39 @@ namespace Dictionary.ViewModel
 
                 var dictionaryClient = new DictionaryClient();  // create client
                 var dictionaryService = new DictionaryService(dictionaryClient);  // create service
-                var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, SourceLanguage);  // get definitions asynchronously
 
-                if (getDefinitionTask != null && getDefinitionTask.Meanings != null)  // if definitions were found
+                try
                 {
-                    Meanings = new ObservableCollection<string>(getDefinitionTask.Meanings);  // update found meanings
+                    var getDefinitionTask = await dictionaryService.GetDefinitionAsync(Word, SourceLanguage);  // get definitions asynchronously
 
-                    if (Meanings != null && Meanings.Count > 0)
+                    if (getDefinitionTask != null && getDefinitionTask.Meanings != null)  // if definitions were found
                     {
-                        Status = ENTER;
+                        Meanings = new ObservableCollection<string>(getDefinitionTask.Meanings);  // update found meanings
+
+                        if (Meanings != null && Meanings.Count > 0)
+                        {
+                            Status = ENTER;
+                        }
+                        else
+                        {
+                            Status = NOT_FOUND;
+                        }
                     }
                     else
                     {
                         Status = NOT_FOUND;
                     }
-                }
-                else
-                {
-                    Status = NOT_FOUND;
-                }
 
-                if (Word == "")
-                {
-                    Status = ENTER;
+                    if (Word == "")
+                    {
+                        Status = ENTER;
 
-                    ClearMeanings();  // clear any previously stored meanings
+                        ClearMeanings();  // clear any previously stored meanings
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Status = NO_CONNECTION;
                 }
             }
             else
@@ -215,24 +230,32 @@ namespace Dictionary.ViewModel
         {
             var dictionaryClient = new DictionaryClient();  // create client
             var languageService = new LanguageService(dictionaryClient);  // create service
-            var getLanguagesTask = await languageService.GetSourceLanguagesAsnyc();  // get source languages asyunchronously
 
-            if (getLanguagesTask != null && getLanguagesTask.Languages != null)  // if source languages were found
+            try
             {
-                var languages = new ObservableCollection<string>();  // transfer supported language strings here
+                var getLanguagesTask = await languageService.GetSourceLanguagesAsnyc();  // get source languages asyunchronously
 
-                foreach (string language in getLanguagesTask.Languages)
+                if (getLanguagesTask != null && getLanguagesTask.Languages != null)  // if source languages were found
                 {
-                    languages.Add(language);
+                    var languages = new ObservableCollection<string>();  // transfer supported language strings here
+
+                    foreach (string language in getLanguagesTask.Languages)
+                    {
+                        languages.Add(language);
+                    }
+
+                    SourceLanguages = languages;  // set SourceLanguages to those found
+
+                    comboBox.SelectedIndex = SourceLanguages.IndexOf("en");  // set initial value of combo box to English
                 }
-
-                SourceLanguages = languages;  // set SourceLanguages to those found
-
-                comboBox.SelectedIndex = SourceLanguages.IndexOf("en");  // set initial value of combo box to English
+                else
+                {
+                    SourceLanguages = new ObservableCollection<string>();
+                }
             }
-            else
+            catch (Exception exception)
             {
-                SourceLanguages = new ObservableCollection<string>();
+                Status = NO_CONNECTION;
             }
         }
 
@@ -242,6 +265,20 @@ namespace Dictionary.ViewModel
             {
                 Meanings.Clear();
             }
+        }
+
+        public static void DelayAction(int milliseconds)  // timer
+        {
+            var timer = new DispatcherTimer();
+
+            timer.Tick += delegate
+            {
+                timer.Stop();
+            };
+
+            timer.Interval = TimeSpan.FromMilliseconds(milliseconds);
+
+            timer.Start();
         }
 
         public static void DelayAction(int milliseconds, Action action)  // timer
